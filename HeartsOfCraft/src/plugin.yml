@@ -1,0 +1,9 @@
+name: HeartsOfCraft
+author: KingOfMars4
+main: me.kingofmars4.hoc.Main
+version: 1.0
+description: Real time streategy game minecraft plugin.
+
+commands:
+    population:
+        usage: /population (nation)
