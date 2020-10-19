@@ -7,3 +7,5 @@ description: Real time streategy game minecraft plugin.
 commands:
     population:
         usage: /population (nation)
+    turn:
+        usage: /turn      
