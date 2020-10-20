@@ -5,7 +5,12 @@ version: 1.0
 description: Real time streategy game minecraft plugin.
 
 commands:
+    hoc:
+        usage: /hoc
+    hoc reload:
+        usage: /hoc reload
     population:
         usage: /population (nation)
     turn:
         usage: /turn      
+        usage: /turn          

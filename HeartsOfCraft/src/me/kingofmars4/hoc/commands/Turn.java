@@ -18,7 +18,6 @@ public class Turn implements CommandExecutor {
 			Player p = (Player) sender;
 			
 			if (p.hasPermission("hoc.player") ) {
-				
 				Time.passTurn();
 
 				Bukkit.broadcastMessage("%d-%m-%a".replaceAll("%d", String.valueOf(Time.day)).replaceAll("%m", Time.month).replaceAll("%a", String.valueOf(Time.year)));

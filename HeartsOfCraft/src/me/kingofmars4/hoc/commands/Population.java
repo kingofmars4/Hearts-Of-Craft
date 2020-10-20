@@ -4,8 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.kingofmars4.hoc.nations.America;
-import me.kingofmars4.hoc.nations.Germany;
 import me.kingofmars4.hoc.utils.Messages;
 import me.kingofmars4.hoc.utils.U;
 
@@ -23,8 +21,8 @@ public class Population implements CommandExecutor {
 					
 				} else if (args.length == 1) {
 					
-					if (args[0].equalsIgnoreCase("america")) { p.sendMessage("America's total population: " + String.format("%.2fM", America.population/ 1000000.0));} 
-					else if (args[0].equalsIgnoreCase("germany")) {  p.sendMessage("Germany's total population: " + String.format("%.2fM", Germany.population/ 1000000.0)); }
+					if (args[0].equalsIgnoreCase("america")) { p.sendMessage("America's total population: ") ;} 
+					else if (args[0].equalsIgnoreCase("germany")) {  p.sendMessage("Germany's total population: ") ;}
 					
 					
 					else { p.sendMessage(Messages.pluginPrefix + U.color("&cCountry not found!"));}
