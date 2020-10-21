@@ -2,14 +2,11 @@ package me.kingofmars4.hoc.countries;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.entity.Player;
-
 import me.kingofmars4.hoc.Main;
 
 public class Germany {
 	public static List<String> territories = new ArrayList<String>();
-	public static ArrayList<Player> player = new ArrayList<Player>();
+	public static String player;
 	
 	public static void loadFirstTimeTerritories() {
 		territories.add("Baden");
@@ -29,19 +26,23 @@ public class Germany {
 	}
 	
 	public static void loadFirstTimePopulation() {
-		Main.addGameDataDefault("Territories.Baden.Territories", 11100394);
-    	Main.addGameDataDefault("Territories.Bavaria.Territories", 13124737);
-    	Main.addGameDataDefault("Territories.Berlin.Territories", 3669491);
-    	Main.addGameDataDefault("Territories.Brandenburg.Territories", 2521893);
-    	Main.addGameDataDefault("Territories.Bremen.Territories", 681202);
-    	Main.addGameDataDefault("Territories.Hamburg.Territories", 1847253);
-    	Main.addGameDataDefault("Territories.Hesse.Territories", 6288080);
-    	Main.addGameDataDefault("Territories.Holstein.Territories", 2896712);
-    	Main.addGameDataDefault("Territories.Mecklenburg.Territories", 1609675);
-    	Main.addGameDataDefault("Territories.Rhineland.Territories", 4084844);
-    	Main.addGameDataDefault("Territories.Saarland.Territories", 990509);
-    	Main.addGameDataDefault("Territories.Saxony.Territories", 14279706);
-    	Main.addGameDataDefault("Territories.Thuringia.Territories", 2143145);
-    	Main.addGameDataDefault("Territories.Westphalia.Territories", 17932651);
+		Main.addGameDataDefault("Territories.Baden.Population", 11100394);
+    	Main.addGameDataDefault("Territories.Bavaria.Population", 13124737);
+    	Main.addGameDataDefault("Territories.Berlin.Population", 3669491);
+    	Main.addGameDataDefault("Territories.Brandenburg.Population", 2521893);
+    	Main.addGameDataDefault("Territories.Bremen.Population", 681202);
+    	Main.addGameDataDefault("Territories.Hamburg.Population", 1847253);
+    	Main.addGameDataDefault("Territories.Hesse.Population", 6288080);
+    	Main.addGameDataDefault("Territories.Holstein.Population", 2896712);
+    	Main.addGameDataDefault("Territories.Mecklenburg.Population", 1609675);
+    	Main.addGameDataDefault("Territories.Rhineland.Population", 4084844);
+    	Main.addGameDataDefault("Territories.Saarland.Population", 990509);
+    	Main.addGameDataDefault("Territories.Saxony.Population", 14279706);
+    	Main.addGameDataDefault("Territories.Thuringia.Population", 2143145);
+    	Main.addGameDataDefault("Territories.Westphalia.Population", 17932651);
+	}
+	
+	public static void loadFirstTimePlayers() {
+		Main.addGameDataDefault("Countries.Germany.Player", "EMPTY");
 	}
 }

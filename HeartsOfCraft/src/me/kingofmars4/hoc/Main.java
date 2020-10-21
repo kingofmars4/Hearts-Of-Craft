@@ -9,12 +9,11 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.kingofmars4.hoc.commands.Population;
+import me.kingofmars4.hoc.commands.CommandPopulation;
 import me.kingofmars4.hoc.commands.Turn;
-import me.kingofmars4.hoc.countries.America;
-import me.kingofmars4.hoc.countries.Germany;
 import me.kingofmars4.hoc.files.CommentedYamlConfiguration;
 import me.kingofmars4.hoc.guis.SelectCountry;
+import me.kingofmars4.hoc.handlers.Players;
 import me.kingofmars4.hoc.handlers.Territories;
 import me.kingofmars4.hoc.utils.GUIs;
 import me.kingofmars4.hoc.utils.Messages;
@@ -30,24 +29,34 @@ public class Main extends JavaPlugin {
 		loadCommands();
 		loadListeners();
 		loadConfigFiles();
-		
+		U.loadCache();
 		
 		getLogger().info(this.getDescription().getFullName() + " by KingOfMars4 has been enabled!");
 	}
 	
-	public void loadCommands() {
-		getCommand("population").setExecutor(new Population());
-		getCommand("turn").setExecutor(new Turn());
+	@Override
+	public void onDisable() {
+		Territories.saveTerritories();
+		Players.savePlayers();
+		saveGamedata();
 	}
 	
-	public void loadConfigFiles() {
-		if (!getDataFolder().exists()) getDataFolder().mkdirs();  
-		reloadGamedata();
+	
+	
+	public void loadCommands() {
+		getCommand("population").setExecutor(new CommandPopulation());
+		getCommand("turn").setExecutor(new Turn());
 	}
 	
 	public void loadListeners() {
 		getServer().getPluginManager().registerEvents(new SelectCountry(), this);
 	}
+	
+	public void loadConfigFiles() {
+		if (!getDataFolder().exists()) getDataFolder().mkdirs();  
+		loadGamedata();
+	}
+	
 	
 	
 	// COMMANDS
@@ -59,7 +68,7 @@ public class Main extends JavaPlugin {
 					case "reload":
 						if (p.hasPermission("hoc.reload")) {
 							 
-							loadConfigFiles();
+							loadGamedata();
 
 							p.sendMessage(Messages.pluginPrefix + U.color("&9Config reloaded &asuccessfully&9!"));
 						 } else {
@@ -71,8 +80,7 @@ public class Main extends JavaPlugin {
 			} else {
 				
 				if (p.hasPermission("hoc.player")) {
-					
-					p.openInventory(SelectCountry.gui);
+					p.openInventory(GUIs.selectCountry);
 					
 				} else {
 					p.sendMessage(Messages.noPerm);
@@ -90,17 +98,12 @@ public class Main extends JavaPlugin {
 	@SuppressWarnings("unused")
 	private String newline = System.getProperty("line.separator");
 	 
-	public static void reloadGamedata(){
-		loadGamedata();
-		Territories.loadTerritories();
-	}
-	
+	public static File f = new File("plugins/HeartsOfCraft", "gamedata.yml"); 
     public static void loadGamedata(){ 
-        File f = new File(plugin.getDataFolder(), "gamedata.yml"); 
+        
          
         if(!f.exists()) { 
             try { 
-            	Territories.loadFirstTimeTerritories();
                 f.createNewFile(); 
             } catch (IOException e) { 
                 e.printStackTrace(); 
@@ -119,37 +122,33 @@ public class Main extends JavaPlugin {
             e.printStackTrace(); 
         } 
     	
-    	//LOAD OWNED TERRITORIES
-    		// USA
-    			addGameDataDefault("Countries.USA.Territories", America.territories);
-		    	
-		    	
-	    	// GERMANY
-			    addGameDataDefault("Countries.Germany.Territories",Germany.territories);
-    	
-    	
-    	//LOAD FIRST TIME TERRITORIES
-		    	me.kingofmars4.hoc.handlers.Population.loadFirstTimePopulation(); 	
+    	//LOAD GAME DATA FOR FIRST TIME
+    	U.loadFirstTimeGamedata();
 			    	
     	
-        // Write back config 
         try { 
         	gamedata.save(f); 
         } catch (IOException e) { 
             e.printStackTrace(); 
         } 
+        
     } 
 	
-	public CommentedYamlConfiguration getGamedata() {	
-		return gamedata;
-	}
-	
+    public void saveGamedata() {
+    	try { 
+        	gamedata.save(f); 
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        } 
+    }
+    
 	private static boolean gamedataPath(String path) {
 		return gamedata.isSet(path);
 	}
 	
+	
 	@SuppressWarnings("unused")
-	private void addGamedataComment(String path, String... comment) {
+	public void addGamedataComment(String path, String... comment) {
 		gamedata.addComment(path, comment);		
 	}
 	

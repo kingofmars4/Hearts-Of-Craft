@@ -17,8 +17,17 @@ public class Population {
 		
 	}	
 	
+	public static void savePopulation() {
+		
+	}
+	
+	public static void loadPopulation() {
+		
+	}
+	
 	public static void loadFirstTimePopulation() {
 		America.loadFirstTimePopulation();
 		Germany.loadFirstTimePopulation();
+		
 	}
 }

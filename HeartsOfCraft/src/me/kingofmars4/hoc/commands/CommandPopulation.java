@@ -4,10 +4,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import me.kingofmars4.hoc.countries.America;
 import me.kingofmars4.hoc.utils.Messages;
 import me.kingofmars4.hoc.utils.U;
 
-public class Population implements CommandExecutor {
+public class CommandPopulation implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,  String[] args) {
@@ -18,6 +20,8 @@ public class Population implements CommandExecutor {
 			if (p.hasPermission("hoc.player") ) {
 				
 				if (args.length==0) {
+					
+					p.sendMessage(America.player);
 					
 				} else if (args.length == 1) {
 					
