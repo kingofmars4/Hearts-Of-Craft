@@ -1,11 +1,10 @@
 package me.kingofmars4.hoc.commands;
 
 import org.bukkit.command.Command;
+
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import me.kingofmars4.hoc.countries.America;
 import me.kingofmars4.hoc.utils.Messages;
 import me.kingofmars4.hoc.utils.U;
 
@@ -21,7 +20,7 @@ public class CommandPopulation implements CommandExecutor {
 				
 				if (args.length==0) {
 					
-					p.sendMessage(America.player);
+
 					
 				} else if (args.length == 1) {
 					
