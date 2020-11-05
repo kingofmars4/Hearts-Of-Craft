@@ -19,7 +19,7 @@ public class SelectCountry implements Listener {
 	public static Inventory gui = Bukkit.createInventory(null, 27, U.color("&0Select Your Nation!"));
 	
 	public static void updateGUI() {
-		if (CountrieManager.get().getCountrie("America").getPlayer().isEmpty()) {
+		if (CountrieManager.get().getCountrie("USA").getPlayer().isEmpty()) {
 			GUIs.createSkull("02v", SelectCountry.gui, 0, U.color("&9USA &a- OPEN"), "");
 		} else {
 			GUIs.createSkull("YohanTM", SelectCountry.gui, 0, U.color("&9USA &c- TAKEN"), "");
@@ -36,28 +36,24 @@ public class SelectCountry implements Listener {
 		
 		
 		if (inventory.getName().equals(gui.getName())) {
+			event.setCancelled(true); 
+			
 			if (clicked.getType() == Material.REDSTONE_BLOCK) {
-				event.setCancelled(true); 
-				p.closeInventory();
-			}
-			
-			if (clicked.getItemMeta().getDisplayName().equals(U.color("&9USA &a- OPEN"))) {
-				event.setCancelled(true); 
-				p.closeInventory();
+			} else if (clicked.getItemMeta().getDisplayName().equals(U.color("&9USA &a- OPEN"))) {
+				CountrieManager.get().addPlayer(p, "USA");
 				p.sendMessage(Messages.pluginPrefix + U.color("&aYou have selected &9[United States Of America]"));
-				CountrieManager.get().addPlayer(p, "America");
 				updateGUI();
-			}
-			
-			if (clicked.getItemMeta().getDisplayName().equals(U.color("&9USA &c- TAKEN"))) {
-				event.setCancelled(true); 
-				if (CountrieManager.get().getCountrie("America").getPlayer().contains(p.getUniqueId())) {
-					CountrieManager.get().getCountrie("America").getPlayer().clear();
-					p.closeInventory();
+			} else if (clicked.getItemMeta().getDisplayName().equals(U.color("&9USA &c- TAKEN"))) {
+				if (CountrieManager.get().getCountrie("USA").getPlayer().contains(p.getUniqueId())) {
+					CountrieManager.get().getCountrie("USA").getPlayer().clear();
 					p.sendMessage(Messages.pluginPrefix + U.color("&cYou have unselected &9[United States Of America]"));
 					updateGUI();
+				} else { 
+					p.sendMessage(Messages.pluginPrefix+U.color("&9[United States Of America] &cIs alredy being controlled!"));
 				}
 			}
+			p.closeInventory();
 		}
 	}
+		
 }

@@ -37,7 +37,7 @@ public class CountrieManager {
     	if (c == null) { p.sendMessage(Messages.pluginPrefix+U.color("&cInvalid countrie!")); return;}
     	if (this.hasCountrie(p)) { p.sendMessage(Messages.pluginPrefix+U.color("&cYou alredy control &e'%c'&c!".replaceAll("%c", c.getName()))); return;}
     	
-    	if (!c.getPlayer().isEmpty()) { p.sendMessage(Messages.pluginPrefix+U.color("&e'%c'&cIs alredy being controlled!".replaceAll("%c", c.getName()))); return; } else {
+    	if (c.getPlayer().isEmpty()) {
     		c.getPlayer().add(p.getUniqueId());
     	}
     }
@@ -67,7 +67,7 @@ public class CountrieManager {
     }
     
     public void loadCountries() {
-    	this.countries.add(new Countrie("America", null));
+    	this.countries.add(new Countrie("USA", null));
     	this.countries.add(new Countrie("Germany", null));
     }
 }

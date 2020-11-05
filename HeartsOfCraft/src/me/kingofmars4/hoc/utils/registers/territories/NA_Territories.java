@@ -23,7 +23,7 @@ public class NA_Territories {
 		Gamedata.get().set("Territories.Oregon.Owner", "USA"); Gamedata.get().set("Territories.Oregon.Population", 38310074+6724540); // OREGON + WASHINGTON
 		Gamedata.get().set("Territories.Texas.Owner", "USA"); Gamedata.get().set("Territories.Texas.Population", 25145561+3751351+2059179); // TEXAS + OKLAHOMA + NOVO MEXICO
 		Gamedata.get().set("Territories.Washington.Owner", "USA"); Gamedata.get().set("Territories.Washington.Population", 8001024+1852994+5773552+897934+601723);
-		
 	}
+	
 
 }

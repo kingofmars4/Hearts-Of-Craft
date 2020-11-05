@@ -22,9 +22,8 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         
-        CountrieManager.get().loadCountries();
-        TerritorieManager.get().loadCountries();
         loadConfigFiles();
+        loadCache();
         loadCommands();
         loadListeners();
        
@@ -33,7 +32,7 @@ public class Main extends JavaPlugin {
    
     @Override
     public void onDisable() {
-    	
+    	saveCache();
     }
    
  
@@ -46,14 +45,23 @@ public class Main extends JavaPlugin {
        getServer().getPluginManager().registerEvents(new SelectCountry(), this);
     }
    
+    public void saveCache() {
+  	   
+  	   TerritorieManager.get().saveTerritories();
+     }
+    
+    public void loadCache() {
+ 	   
+ 	   CountrieManager.get().loadCountries();
+ 	   TerritorieManager.get().loadTerritories();
+    }
+    
     public void loadConfigFiles() {
     	Gamedata.setup();
     	U.loadDefaults();
 		Gamedata.get().options().copyDefaults(true);
 		Gamedata.save();
     }
-   
-   
    
     // COMMANDS
     @Override
@@ -63,24 +71,17 @@ public class Main extends JavaPlugin {
                
                     case "reload":
                         if (p.hasPermission("hoc.reload")) {
-                           
 
+                        	TerritorieManager.get().saveTerritories();
                             p.sendMessage(Messages.pluginPrefix + U.color("&9Config reloaded &asuccessfully&9!"));
                          } else {
                             p.sendMessage(Messages.noPerm);
                         }
-                       
-                   
                 }
             } else {
-            	for (int i = 0; i<TerritorieManager.get().territories.size(); i++) {
-            		String territorio = TerritorieManager.get().territories.get(i).getName();
-            		Bukkit.broadcastMessage("Territorie: "+ territorio);
-            		Bukkit.broadcastMessage("Owner: "+TerritorieManager.get().getOwner(territorio).getName());
-            		Bukkit.broadcastMessage("Population: "+TerritorieManager.get().getPopulation(territorio));
-            		Bukkit.broadcastMessage("----------------");
-            	}
-             
+            	
+                Bukkit.broadcastMessage(""+ TerritorieManager.get().getTerritorie("Alaska").getPopulation());
+            	
                 if (p.hasPermission("hoc.player")) {
                 	SelectCountry.updateGUI();
                     p.openInventory(SelectCountry.gui);

@@ -26,4 +26,8 @@ public class Territorie {
 	public int getPopulation() {
 		return this.population;
 	}
+	
+	public void setPopulation(int population) {
+		this.population = population;
+	}
 }
