@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import me.kingofmars4.hoc.guis.SelectCountry;
+import me.kingofmars4.hoc.handlers.Lobby;
 import me.kingofmars4.hoc.handlers.LobbyManager;
 import me.kingofmars4.hoc.utils.Messages;
 import me.kingofmars4.hoc.utils.U;
@@ -26,7 +28,11 @@ public class JoinGame implements Listener {
 						if (LobbyManager.get().isInLobby(p)) { p.sendMessage(Messages.pluginPrefix+U.color("&cYou can not join more than 1 game at once!")); return;}
 						
 						LobbyManager.get().addPlayer(p, id);
+						Lobby l = LobbyManager.get().getLobby(id);
 						p.sendMessage(Messages.pluginPrefix+U.color("&aYou have succefully joined &eLobby n%n&a!".replaceAll("%n", id+"")));
+						if (l.getPlayers().size()==2) {
+							SelectCountry.startCounting(l);
+						}
 					} else { p.sendMessage(Messages.noPerm); }
 				}
 			}

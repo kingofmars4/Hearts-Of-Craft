@@ -31,6 +31,6 @@ public class GUIs {
 	}
 	
 	public static void closeMenu(Inventory inv, int slot) {
-		createDisplay(new ItemStack(Material.REDSTONE_BLOCK), inv, slot, U.color("&cClose Menu"), "");
+		createDisplay(new ItemStack(Material.ARROW), inv, slot, U.color("&cClose Menu"), "");
 	}
 }

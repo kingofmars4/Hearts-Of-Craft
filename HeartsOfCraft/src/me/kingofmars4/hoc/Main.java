@@ -108,7 +108,7 @@ public class Main extends JavaPlugin {
                 if (p.hasPermission("hoc.player")) {
                 	if (LobbyManager.get().isInLobby(p)) {
                 		SelectCountry.updateGUI(p);
-                        p.openInventory(SelectCountry.gui);
+                		p.openInventory(SelectCountry.gui);
                 	} else { p.sendMessage(Messages.pluginPrefix+U.color("&cYou must be in a lobby to execute that command!")); }
                 } else { p.sendMessage(Messages.noPerm); }
             }

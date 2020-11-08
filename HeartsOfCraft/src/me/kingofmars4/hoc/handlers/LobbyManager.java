@@ -88,6 +88,12 @@ public class LobbyManager {
     	}
     }
     
+    public void sendMessages(Lobby l, String s) {
+    	for (Player p : l.getPlayers()) {
+    		p.sendMessage(U.color(s));
+    	}
+    }
+    
     
     public Countrie getCountrie(Lobby l, String name) {
     	for (Countrie c : l.getCountries()) {
@@ -109,7 +115,7 @@ public class LobbyManager {
     
     public Lobby getPlayerLobby(Player p) {
     	for (Lobby l: this.Lobbys) {
-    		if (l.getPlayers().contains(p.getUniqueId())) {
+    		if (l.getPlayers().contains(p)) {
     			return l;
     		}
     	}
@@ -127,7 +133,7 @@ public class LobbyManager {
     
     public boolean isInLobby(Player p) {
         for (Lobby a : this.Lobbys) {
-            if (a.getPlayers().contains(p.getUniqueId()))
+            if (a.getPlayers().contains(p))
                 return true;
         }
         return false;
@@ -152,7 +158,7 @@ public class LobbyManager {
     	ItemStack leaveGame = U.createItemStack(Material.REDSTONE_TORCH_ON, "&cLeave Lobby");
         Lobby a = this.getLobby(i);
         
-        a.getPlayers().add(p.getUniqueId());
+        a.getPlayers().add(p);
         
         inv.put(p.getUniqueId(), p.getInventory().getContents());
         armor.put(p.getUniqueId(), p.getInventory().getArmorContents());
@@ -171,7 +177,7 @@ public class LobbyManager {
 
         // Searches each arena for the player
         for (Lobby l : this.Lobbys) {
-            if (l.getPlayers().contains(p.getUniqueId()))
+            if (l.getPlayers().contains(p))
                 a = l;
         }
 
@@ -180,7 +186,7 @@ public class LobbyManager {
             return;
         }
 
-        a.getPlayers().remove(p.getUniqueId());
+        a.getPlayers().remove(p);
 
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);

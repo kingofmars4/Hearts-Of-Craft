@@ -25,7 +25,7 @@ public class CreateSign implements Listener {
 							e.setLine(0, U.color("&2[Hearts Of Craft]")); 
 							e.setLine(1, U.color("&a&lOPEN"));
 							e.setLine(2, "Lobby"+lobby);
-							e.setLine(3, U.color("&1[0/4]"));
+							e.setLine(3, U.color("&1Right click to join"));
 							
 						} else { p.sendMessage(Messages.pluginPrefix + U.color("&e'%n' &cis not a valid lobby id!".replaceAll("%n", e.getLine(2)))); e.getBlock().breakNaturally();}
 					} 
