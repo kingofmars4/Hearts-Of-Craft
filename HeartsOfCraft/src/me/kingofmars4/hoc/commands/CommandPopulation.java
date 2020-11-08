@@ -1,10 +1,13 @@
 package me.kingofmars4.hoc.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import me.kingofmars4.hoc.handlers.Lobby;
+import me.kingofmars4.hoc.handlers.LobbyManager;
 import me.kingofmars4.hoc.utils.Messages;
 import me.kingofmars4.hoc.utils.U;
 
@@ -19,8 +22,8 @@ public class CommandPopulation implements CommandExecutor {
 			if (p.hasPermission("hoc.player") ) {
 				
 				if (args.length==0) {
-					
-
+					Lobby l3 = LobbyManager.get().getLobby(3);
+					Bukkit.broadcastMessage(""+LobbyManager.get().getTerritorie(l3, "Alaska").getPopulation());
 					
 				} else if (args.length == 1) {
 					

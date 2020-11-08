@@ -1,11 +1,9 @@
-package me.kingofmars4.hoc.handlers.territories;
-
-import me.kingofmars4.hoc.handlers.countries.Countrie;
+package me.kingofmars4.hoc.handlers;
 
 public class Territorie {
 	
 	private final String name;
-	private Countrie owner;
+	private final Countrie owner;
 	private int population;
 	
 	public Territorie (String name, Countrie owner, int population) {

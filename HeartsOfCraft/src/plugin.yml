@@ -13,4 +13,9 @@ commands:
         usage: /population (nation)
     turn:
         usage: /turn      
-        usage: /turn          
+    createlobby:
+        usage: /createlobby  
+        description: Create a new lobby
+    deletelobby:
+        usage: /deletelobby  
+        description: Delete a existing lobby        

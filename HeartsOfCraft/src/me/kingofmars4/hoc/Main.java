@@ -5,13 +5,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.kingofmars4.hoc.commands.CommandPopulation;
+import me.kingofmars4.hoc.commands.CreateLobby;
+import me.kingofmars4.hoc.commands.DeleteLobby;
 import me.kingofmars4.hoc.commands.Turn;
 import me.kingofmars4.hoc.files.Gamedata;
+import me.kingofmars4.hoc.files.FileLobbys;
 import me.kingofmars4.hoc.guis.SelectCountry;
-import me.kingofmars4.hoc.handlers.countries.CountrieManager;
-import me.kingofmars4.hoc.handlers.territories.TerritorieManager;
+import me.kingofmars4.hoc.handlers.LobbyManager;
+import me.kingofmars4.hoc.listeners.CreateSign;
+import me.kingofmars4.hoc.listeners.JoinGame;
+import me.kingofmars4.hoc.listeners.LobbyItems;
 import me.kingofmars4.hoc.utils.Messages;
 import me.kingofmars4.hoc.utils.U;
 
@@ -19,11 +25,15 @@ public class Main extends JavaPlugin {
    
     public static Plugin plugin; public static Plugin getPlugin(){return plugin;}
    
+    @Override
+    public void onLoad() {
+    	loadConfigFiles();
+        loadCache();
+    }
+    
     public void onEnable() {
         plugin = this;
         
-        loadConfigFiles();
-        loadCache();
         loadCommands();
         loadListeners();
        
@@ -39,21 +49,28 @@ public class Main extends JavaPlugin {
     public void loadCommands() {
         getCommand("population").setExecutor(new CommandPopulation());
         getCommand("turn").setExecutor(new Turn());
+        getCommand("createlobby").setExecutor(new CreateLobby());
+        getCommand("deletelobby").setExecutor(new DeleteLobby());
     }
    
     public void loadListeners() {
-       getServer().getPluginManager().registerEvents(new SelectCountry(), this);
+    	PluginManager pm = getServer().getPluginManager();
+    	pm.registerEvents(new SelectCountry(), this);
+    	pm.registerEvents(new CreateSign(), this);
+    	pm.registerEvents(new JoinGame(), this);
+    	pm.registerEvents(new LobbyItems(), this);
     }
    
     public void saveCache() {
   	   
-  	   TerritorieManager.get().saveTerritories();
      }
     
     public void loadCache() {
  	   
- 	   CountrieManager.get().loadCountries();
- 	   TerritorieManager.get().loadTerritories();
+    	LobbyManager.get().loadLobbySize();
+    	LobbyManager.get().loadLobbys();
+    	
+    	getLogger().info("Cache data succefully loaded.");
     }
     
     public void loadConfigFiles() {
@@ -61,6 +78,11 @@ public class Main extends JavaPlugin {
     	U.loadDefaults();
 		Gamedata.get().options().copyDefaults(true);
 		Gamedata.save();
+		
+		FileLobbys.setup();
+		FileLobbys.save();
+		
+		getLogger().info("Configuration files succefully loaded.");
     }
    
     // COMMANDS
@@ -71,24 +93,24 @@ public class Main extends JavaPlugin {
                
                     case "reload":
                         if (p.hasPermission("hoc.reload")) {
-
-                        	TerritorieManager.get().saveTerritories();
+                        	
+                        	saveCache();
+                        	Bukkit.getPluginManager().disablePlugin(this);
+                        	loadConfigFiles();
+                            loadCache();
+                        	Bukkit.getPluginManager().enablePlugin(this);
                             p.sendMessage(Messages.pluginPrefix + U.color("&9Config reloaded &asuccessfully&9!"));
                          } else {
                             p.sendMessage(Messages.noPerm);
                         }
                 }
             } else {
-            	
-                Bukkit.broadcastMessage(""+ TerritorieManager.get().getTerritorie("Alaska").getPopulation());
-            	
                 if (p.hasPermission("hoc.player")) {
-                	SelectCountry.updateGUI();
-                    p.openInventory(SelectCountry.gui);
-                   
-                } else {
-                    p.sendMessage(Messages.noPerm);
-                }
+                	if (LobbyManager.get().isInLobby(p)) {
+                		SelectCountry.updateGUI(p);
+                        p.openInventory(SelectCountry.gui);
+                	} else { p.sendMessage(Messages.pluginPrefix+U.color("&cYou must be in a lobby to execute that command!")); }
+                } else { p.sendMessage(Messages.noPerm); }
             }
             return true;
          }

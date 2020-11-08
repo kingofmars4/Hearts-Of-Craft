@@ -1,4 +1,4 @@
-package me.kingofmars4.hoc.handlers.countries;
+package me.kingofmars4.hoc.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +6,13 @@ import java.util.UUID;
 
 public class Countrie {
 	
-	private final String name;
+	private String name;
 	private final List<UUID> player = new ArrayList<UUID>();
+	private final int id;
 	
-	public Countrie (String name, UUID player) {
+	public Countrie (String name, UUID player,  int id) {
 		this.name = name;
+		this.id = id;
 	}
 	
 	// GETTERS
@@ -21,5 +23,14 @@ public class Countrie {
 	public String getName() {
 		return this.name;
 	}
-
+	
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public int getID() {
+		return this.id;
+	}
+	
 }
